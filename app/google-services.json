@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "961977164905",
+    "firebase_url": "https://colorbook-69303.firebaseio.com",
+    "project_id": "colorbook-69303",
+    "storage_bucket": "colorbook-69303.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961977164905:android:ee6fcfd6b1e0f3b6eb2ef8",
+        "android_client_info": {
+          "package_name": "com.hanix.colorbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "961977164905-g0jauhjj1i2du3t3p2ifjq7te7363lr2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hanix.colorbook",
+            "certificate_hash": "cb211c7736ca0027f20474fea2555d95ba96ad1c"
+          }
+        },
+        {
+          "client_id": "961977164905-pl5e3upmplgjkmbjqqckacac83g5j84g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_uWHWdCc1-VqVEzI9kwb3ac6Dx0DAvPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "961977164905-pl5e3upmplgjkmbjqqckacac83g5j84g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
