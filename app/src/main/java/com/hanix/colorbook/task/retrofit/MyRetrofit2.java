@@ -2,7 +2,7 @@ package com.hanix.colorbook.task.retrofit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hanix.nativebaseproject.common.constants.URLApi;
+import com.hanix.colorbook.common.constants.URLApi;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

@@ -13,31 +13,32 @@ import com.hanix.colorbook.common.constants.AppConstants;
 public class GLog {
 
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static boolean isLogSaveOnOff = false;
+    public static boolean IsLogSaveOnOff = false;
+
 
     /**
-     * 현재 디버그 모드여부를 확인
+     * 현재 디버그 모드여부를 리턴
      * @param context
      * @return
      */
-    public static boolean isDebuggable(Context context) {
+    public static boolean isDebuggable (Context context) {
         boolean debuggable = false;
 
         PackageManager pm = context.getPackageManager();
         try {
-            ApplicationInfo appInfo = pm.getApplicationInfo(context.getPackageName(), 0);
-            debuggable = (0 != (appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE));
+            ApplicationInfo appinfo = pm.getApplicationInfo(context.getPackageName(), 0);
+            debuggable = (0 != (appinfo.flags & ApplicationInfo.FLAG_DEBUGGABLE));
         } catch (PackageManager.NameNotFoundException e) {
-
+            /* debuggable variable will remain false */
         }
+
         return debuggable;
     }
 
-    private static synchronized void dLong(String theMsg, int logType) {
+    private static synchronized void dLong (String theMsg, int logType) {
         final int MAX_INDEX = 2000;
 
-        if(theMsg == null)
-            return;
+        if(theMsg == null) return;
 
         if(theMsg.length() > MAX_INDEX) {
             String theSubString = theMsg.substring(0, MAX_INDEX);
@@ -45,16 +46,14 @@ public class GLog {
 
             theSubString = getWithMethodName(theSubString);
 
-            switch (logType) {
-                case 1: // i
+            switch(logType) {
+                case 1: //i
                     Log.i(AppConstants.TAG, theSubString);
                     break;
-
-                case 2: // d
+                case 2: //d
                     Log.d(AppConstants.TAG, theSubString);
                     break;
-
-                case 3: // e
+                case 3: //e
                     Log.e(AppConstants.TAG, theSubString);
                     break;
             }
@@ -63,46 +62,45 @@ public class GLog {
             theMsg = getWithMethodName(theMsg);
 
             switch (logType) {
-                case 1: // i
+                case 1: //i
                     Log.i(AppConstants.TAG, theMsg);
                     break;
-
-                case 2: // d
+                case 2: //d
                     Log.d(AppConstants.TAG, theMsg);
                     break;
-
-                case 3: // e
+                case 3: //e
                     Log.e(AppConstants.TAG, theMsg);
                     break;
             }
         }
     }
 
-    private static String getWithMethodName(String log) {
+    private static String getWithMethodName (String log) {
         try {
             StackTraceElement ste = Thread.currentThread().getStackTrace()[5];
             StringBuffer sb = new StringBuffer();
             sb.append("[");
-            sb.append(ste.getFileName().replace(",java", ""));
+            sb.append(ste.getFileName().replace(".java", ""));
             sb.append("::");
+            sb.append(ste.getMethodName());
             sb.append("]");
             sb.append(log);
             return sb.toString();
-        }catch (Throwable e) {
+        } catch (Throwable e) {
             e.printStackTrace();
             return log;
         }
     }
 
-    public static synchronized  void i (String msg) {
+    public static synchronized void i (String msg) {
         if(ColorBookApplication.getInstance().isDebuggable) dLong(msg, 1);
     }
 
-    public static synchronized  void d (String msg) {
+    public static synchronized void d (String msg) {
         if(ColorBookApplication.getInstance().isDebuggable) dLong(msg, 2);
     }
 
-    public static synchronized  void e (String msg) {
+    public static synchronized void e (String msg) {
         if(ColorBookApplication.getInstance().isDebuggable) dLong(msg, 3);
     }
 

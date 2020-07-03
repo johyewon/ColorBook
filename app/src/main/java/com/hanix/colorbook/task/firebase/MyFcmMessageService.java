@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -28,6 +29,8 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.hanix.colorbook.R;
 import com.hanix.colorbook.common.app.GLog;
+import com.hanix.colorbook.common.constants.AppConstants;
+import com.hanix.colorbook.common.constants.URLApi;
 import com.hanix.colorbook.common.utils.AppUtil;
 import com.hanix.colorbook.common.utils.PrefUtil;
 import com.hanix.colorbook.views.AppIntro;
@@ -46,14 +49,13 @@ public class MyFcmMessageService extends FirebaseMessagingService {
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         FirebaseMessaging.getInstance().subscribeToTopic("CastingBox");
-        GLog.d("Firebase Instance Id Service : " + s);
+        Log.d(AppConstants.TAG, "Firebase Instance Id Service : " + s);
         PrefUtil.getInstance(this).setFcmTokenId(s);
     }
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         if(remoteMessage != null && remoteMessage.getData().size() > 0) {
-
             if(true) {
                 sceduleJob();
             } else {

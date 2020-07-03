@@ -3,8 +3,14 @@ package com.hanix.colorbook.common.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 
 public class PrefUtil {
 
@@ -12,6 +18,8 @@ public class PrefUtil {
     private static final String KEY_FCM_TOKEN_ID = "KEY_FCM_TOKEN_ID";
     private static final String KEY_USER_BEAN = "KEY_USER_BEAN";
     private static final String KEY_APP_RESET = "KEY_APP_RESET";
+
+    private static List<String> paletteColor = new ArrayList<String>();
 
     private static SharedPreferences sf;
     private static PrefUtil instance ;
@@ -72,6 +80,37 @@ public class PrefUtil {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return pref.getInt(key, 0);
     }
+
+
+    /*
+    ColorBook
+     */
+    public static void addColor(Context context, String value) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        Editor editor = pref.edit();
+        paletteColor = getColor(context);
+        paletteColor.add(value);
+        editor.putStringSet("colorPalette", new HashSet<>(paletteColor));
+        editor.apply();
+    }
+
+    public static List<String> getColor(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return new ArrayList<>(Objects.requireNonNull(pref.getStringSet("colorPalette", new HashSet<String>())));
+    }
+
+    public static void resetColor(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        Editor editor = pref.edit();
+        paletteColor = getColor(context);
+        paletteColor.clear();
+        editor.putStringSet("colorPalette", new HashSet<>(paletteColor));
+        editor.apply();
+    }
+
+
+
+
 
 
     /** FCM Token Id 값 설정 */

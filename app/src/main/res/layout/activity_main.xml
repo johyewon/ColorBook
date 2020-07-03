@@ -17,9 +17,131 @@
         app:enableAlpha="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/mainLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mainColorView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9">
+
+        <LinearLayout
+            android:id="@+id/mainInLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp">
+
+            <ImageView
+                android:id="@+id/mainCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/picture" />
+
+            <ImageView
+                android:id="@+id/mainGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/slider" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mainInLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp">
+
+            <TextView
+                android:id="@+id/mainCameraText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanumgothic"
+                android:gravity="center"
+                android:text="카메라에서 추출하기" />
+
+            <TextView
+                android:id="@+id/mainGalleryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanumgothic"
+                android:gravity="center"
+                android:text="갤러리에서 불러오기" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mainPalette"
+        android:layout_width="75dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/mainLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/mainPalette"
+        app:layout_constraintStart_toEndOf="@+id/mainColorView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/mainSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_round"
+            android:fontFamily="@font/nanumgothic"
+            android:stateListAnimator="@null"
+            android:text="select" />
+
+        <Button
+            android:id="@+id/mainReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_round"
+            android:fontFamily="@font/nanumgothic"
+            android:stateListAnimator="@null"
+            android:text="reset" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/mainCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/nanumgothic"
+        android:text="0x0000FFFF"
+        app:layout_constraintEnd_toStartOf="@+id/mainPalette"
+        app:layout_constraintStart_toEndOf="@+id/mainColorView"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
