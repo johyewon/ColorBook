@@ -30,7 +30,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.hanix.colorbook.R;
 import com.hanix.colorbook.common.app.GLog;
 import com.hanix.colorbook.common.constants.AppConstants;
-import com.hanix.colorbook.common.constants.URLApi;
 import com.hanix.colorbook.common.utils.AppUtil;
 import com.hanix.colorbook.common.utils.PrefUtil;
 import com.hanix.colorbook.views.AppIntro;
@@ -43,7 +42,6 @@ import java.net.URLConnection;
 public class MyFcmMessageService extends FirebaseMessagingService {
 
     private String title, body, imgUrl = "";
-    private Intent resultIntent;
 
     @Override
     public void onNewToken(@NonNull String s) {
@@ -55,9 +53,9 @@ public class MyFcmMessageService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        if(remoteMessage != null && remoteMessage.getData().size() > 0) {
+        if(remoteMessage.getData().size() > 0) {
             if(true) {
-                sceduleJob();
+                scheduleJob();
             } else {
                 handleNow();
             }
@@ -82,7 +80,7 @@ public class MyFcmMessageService extends FirebaseMessagingService {
         }
     }
 
-    private void sceduleJob() {
+    private void scheduleJob() {
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
         Job myJob = dispatcher.newJobBuilder()
                 .setService(MyJobService.class)
@@ -100,6 +98,7 @@ public class MyFcmMessageService extends FirebaseMessagingService {
     private void sendNotification() {
 
         // 어플 실행 중인지 확인해서 실행 중이면 Main으로 보내기
+        Intent resultIntent;
         if(AppUtil.isAppRunning(this)) {
             resultIntent = new Intent(this, MainActivity.class);
         } else {

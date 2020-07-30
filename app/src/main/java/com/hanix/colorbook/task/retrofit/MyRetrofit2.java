@@ -16,7 +16,7 @@ public class MyRetrofit2 {
 
     static Retrofit mRetrofit;
 
-    public static Retrofit getmRetrofit() {
+    public static Retrofit getMRetrofit() {
         HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
         logger.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();

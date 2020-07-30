@@ -15,17 +15,20 @@ import com.hanix.colorbook.common.app.GLog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaletteAdapter extends RecyclerView.Adapter<PaletteAdapter.Holder>{
+public class PaletteAdapter extends RecyclerView.Adapter<PaletteAdapter.Holder> {
 
     public interface ItemClick {
         void onClick(View view, int position);
     }
 
     private ItemClick itemClick;
-    public void setItemClick(ItemClick itemClick) {this.itemClick = itemClick;}
+
+    public void setItemClick(ItemClick itemClick) {
+        this.itemClick = itemClick;
+    }
 
     Context context;
-    List<String> items = new ArrayList<>();
+    List<String> items;
 
     public PaletteAdapter(List<String> items, Context context) {
         this.items = items;
@@ -36,7 +39,9 @@ public class PaletteAdapter extends RecyclerView.Adapter<PaletteAdapter.Holder>{
         items.add(item);
     }
 
-    public void resetItem() { items.clear(); }
+    public void resetItem() {
+        items.clear();
+    }
 
     public static class Holder extends RecyclerView.ViewHolder {
         protected View paletteView;
@@ -54,31 +59,23 @@ public class PaletteAdapter extends RecyclerView.Adapter<PaletteAdapter.Holder>{
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.palette_item, parent, false);
 
-        Holder holder = new Holder(view);
-
-        return holder;
+        return new Holder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int i) {
-        holder.paletteView.setBackgroundColor( (int) Long.parseLong(items.get(i).replaceFirst("0x", ""), 16));
+        holder.paletteView.setBackgroundColor((int) Long.parseLong(items.get(i).replaceFirst("0x", ""), 16));
         holder.paletteCode.setText(items.get(i));
 
         final int num = i;
-        holder.paletteCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(itemClick != null)
-                    itemClick.onClick(v, num);
-            }
+        holder.paletteCode.setOnClickListener((v) -> {
+            if (itemClick != null)
+                itemClick.onClick(v, num);
         });
 
-        holder.paletteView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(itemClick != null)
-                    itemClick.onClick(v, num);
-            }
+        holder.paletteView.setOnClickListener((v) -> {
+            if (itemClick != null)
+                itemClick.onClick(v, num);
         });
     }
 

@@ -18,8 +18,8 @@ public class AppIntro extends AppCompatActivity {
 
     SharedPreferences sf;
 
-    private static final long SPLASHTIME = 2000;
-    private static final int STOPSPLASH = 0;
+    private static final long SPLASH_TIME = 2000;
+    private static final int STOP_SPLASH = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +37,12 @@ public class AppIntro extends AppCompatActivity {
             super.handleMessage(msg);
 
             Intent intent;
-            boolean isFirstRun = sf.getBoolean(AppConstants.isFirstRun, true);
-            switch (msg.what) {
-                case STOPSPLASH :
-                    intent = new Intent(AppIntro.this, MainActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.fade_in_activity, R.anim.fade_out_activity);
-                    finish();
-                    break;
+//            boolean isFirstRun = sf.getBoolean(AppConstants.isFirstRun, true);
+            if (msg.what == STOP_SPLASH) {
+                intent = new Intent(AppIntro.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in_activity, R.anim.fade_out_activity);
+                finish();
             }
         }
     };
@@ -54,7 +52,7 @@ public class AppIntro extends AppCompatActivity {
         super.onResume();
 
         Message msg = new Message();
-        msg.what = STOPSPLASH;
-        handler.sendMessageDelayed(msg, SPLASHTIME);
+        msg.what = STOP_SPLASH;
+        handler.sendMessageDelayed(msg, SPLASH_TIME);
     }
 }

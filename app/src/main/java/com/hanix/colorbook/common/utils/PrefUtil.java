@@ -16,22 +16,13 @@ public class PrefUtil {
 
     private static final String PREF_NAME = "Pref";
     private static final String KEY_FCM_TOKEN_ID = "KEY_FCM_TOKEN_ID";
-    private static final String KEY_USER_BEAN = "KEY_USER_BEAN";
-    private static final String KEY_APP_RESET = "KEY_APP_RESET";
 
-    private static List<String> paletteColor = new ArrayList<String>();
+    private static List<String> paletteColor = new ArrayList<>();
 
     private static SharedPreferences sf;
     private static PrefUtil instance ;
-    private Gson gson;
 
-    private PrefUtil() {
-        gson = new Gson();
-    }
-
-    public static PrefUtil getInstance() {
-        return instance;
-    }
+    private PrefUtil() {}
 
     public static PrefUtil getInstance(Context context) {
 
@@ -96,7 +87,7 @@ public class PrefUtil {
 
     public static List<String> getColor(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        return new ArrayList<>(Objects.requireNonNull(pref.getStringSet("colorPalette", new HashSet<String>())));
+        return new ArrayList<>(Objects.requireNonNull(pref.getStringSet("colorPalette", new HashSet<>())));
     }
 
     public static void resetColor(Context context) {
@@ -117,7 +108,7 @@ public class PrefUtil {
     public void setFcmTokenId(String tokenId) {
         SharedPreferences.Editor editor = sf.edit();
         editor.putString(KEY_FCM_TOKEN_ID, tokenId);
-        editor.commit();
+        editor.apply();
     }
 
     /** FCM Token Id 값을 취득한다. */

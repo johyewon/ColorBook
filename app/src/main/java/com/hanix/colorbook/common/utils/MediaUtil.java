@@ -37,9 +37,9 @@ public class MediaUtil {
         timer.schedule(timerTask, FADE_INTERVAL, FADE_INTERVAL);
     }
 
-    private void fadeOutStep(float deltavolume, MediaPlayer mediaPlayer) {
+    private void fadeOutStep(float deltaVolume, MediaPlayer mediaPlayer) {
         mediaPlayer.setVolume(stopVolume, stopVolume);
-        stopVolume -= deltavolume;
+        stopVolume -= deltaVolume;
     }
 
     private void stopPlayer(MediaPlayer mediaPlayer) {
@@ -54,14 +54,14 @@ public class MediaUtil {
         final int FADE_INTERVAL = 250;
         final int MAX_VOLUME = 1;
         int numberOfSteps = FADE_DURATION / FADE_INTERVAL;
-        final float deltaVolue = MAX_VOLUME / (float) numberOfSteps;
+        final float deltaVolume = MAX_VOLUME / (float) numberOfSteps;
 
         final Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
 
             @Override
             public void run() {
-                fadeInStep(deltaVolue, mediaPlayer);
+                fadeInStep(deltaVolume, mediaPlayer);
                 if(startVolume >= 1f) {
                     timer.cancel();
                     timer.purge();
@@ -78,10 +78,10 @@ public class MediaUtil {
     }
 
     /** 이미 음악이 실행 중일 경우 오디오 가져오기**/
-    private void audiofocusSdkVersion(Context context) {
+    private void audioFocusSdkVersion(Context context) {
         AudioManager mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         if (mAudioManager != null) {
-            //첫 번째 인자로 listener를 줘야하지만, 음악 일시정지만 하고 싶은 경우엔 null로 준다.
+            //첫 번째 인자로 listener 를 줘야하지만, 음악 일시정지만 하고 싶은 경우엔 null 로 준다.
             int result = mAudioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
             if(result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED){
                 GLog.d("not get audio focus");

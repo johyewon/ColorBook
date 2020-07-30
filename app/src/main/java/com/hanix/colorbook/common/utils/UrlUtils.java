@@ -37,16 +37,16 @@ public class UrlUtils {
     }
 
     /**
-     * list를 url 파라미터 형식으로 변형
+     * list 를 url 파라미터 형식으로 변형
      * @param list
      * @param key
      * @return
      */
     public static String getList2UrlEncodeUTF8(ArrayList<String> list, String key) {
         StringBuilder sb = new StringBuilder();
-        sb.append(key+"=");
+        sb.append(key).append("=");
         for(String temp : list) {
-            sb.append(getUrlEncodeUTF8(temp)+",");
+            sb.append(getUrlEncodeUTF8(temp)).append(",");
         }
         String result = sb.toString();
         result = result.substring(0, result.length()-1);

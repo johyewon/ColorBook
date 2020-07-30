@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hanix.colorbook.R;
-import com.hanix.colorbook.common.app.GLog;
 import com.hanix.colorbook.common.utils.PrefUtil;
 import com.hanix.colorbook.task.common.VersionCheckTask;
 import com.hanix.colorbook.views.adapter.PaletteAdapter;
@@ -26,7 +25,6 @@ import com.hanix.colorbook.views.event.OnSingleClickListener;
 import java.util.List;
 import java.util.Locale;
 
-import top.defaults.colorpicker.ColorObserver;
 import top.defaults.colorpicker.ColorPickerView;
 
 
@@ -43,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     VersionCheckTask versionCheckTask;
 
     private PaletteAdapter adapter;
-    private static List<String> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,26 +76,18 @@ public class MainActivity extends AppCompatActivity {
         mainSelect.setOnClickListener(mainClickListener);
         mainReset.setOnClickListener(mainClickListener);
 
-        items = PrefUtil.getColor(getApplicationContext());
+        List<String> items = PrefUtil.getColor(getApplicationContext());
         adapter = new PaletteAdapter(items, MainActivity.this);
-        GLog.d("click");
-        adapter.setItemClick(new PaletteAdapter.ItemClick() {
-            @Override
-            public void onClick(View view, int position) {
-                GLog.d("ON CLICK");
-                mainColorView.setInitialColor(
-                        (int) Long.parseLong(String.valueOf(adapter.getItem(position)).replaceFirst("0x", ""), 16));
-            }
-        });
+        adapter.setItemClick((view, position) ->
+                mainColorView.setInitialColor((int) Long.parseLong(String.valueOf(adapter.getItem(position)).replaceFirst("0x", ""), 16))
+        );
         mainPalette.setAdapter(adapter);
         mainPalette.setLayoutManager(new LinearLayoutManager(this));
         mainPalette.setItemAnimator(new DefaultItemAnimator());
 
-        mainColorView.subscribe(new ColorObserver() {
-            @Override
-            public void onColor(int color, boolean fromUser, boolean shouldPropagate) {
+        mainColorView.subscribe((color, fromUser, shouldPropagate) -> {
                 mainCode.setText(colorHex(color));
-            }
+                mainCode.setTextColor(color);
         });
 
     }
@@ -127,20 +116,20 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.mainGallery:
                     break;
 
-                case R.id.mainSelect :
+                case R.id.mainSelect:
                     PrefUtil.addColor(getApplicationContext(), String.valueOf(mainCode.getText()));
                     resetAdapter();
-                break;
+                    break;
 
                 case R.id.mainReset:
                     PrefUtil.resetColor(getApplicationContext());
-                    if(adapter != null) {
+                    if (adapter != null) {
                         adapter.resetItem();
                         adapter.notifyDataSetChanged();
                     }
                     break;
 
-                default :
+                default:
                     break;
             }
         }

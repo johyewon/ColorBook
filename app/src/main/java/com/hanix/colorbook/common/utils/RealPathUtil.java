@@ -14,6 +14,7 @@ import androidx.loader.content.CursorLoader;
 
 public class RealPathUtil {
 
+    @SuppressLint("ObsoleteSdkInt")
     public static String getRealPath (Context context, Uri uri) {
         String realPath;
         if (Build.VERSION.SDK_INT < 11) {
@@ -29,7 +30,7 @@ public class RealPathUtil {
         return realPath;
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint({"ObsoleteSdkInt", "NewApi"})
     public static String getRealPathFromURI_API19(final Context context, final Uri uri) {
 
         final boolean isKitkat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -46,7 +47,7 @@ public class RealPathUtil {
 
             } else if(isDownloadsDocument(uri)) {
                 final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
 
                 return getDataColumn(context, contentUri, null, null);
 
@@ -172,10 +173,12 @@ public class RealPathUtil {
     public static String getRealPathFromURI_BelowAPI11(Context context, Uri contentUri) {
         String[] proj = { MediaStore.Images.Media.DATA };
         Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        assert cursor != null;
         int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
-        return cursor.getString(columnIndex);
-
+        String returnString = cursor.getString(columnIndex);
+        cursor.close();
+        return returnString;
     }
 
 }

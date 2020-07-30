@@ -20,7 +20,7 @@ public class ByteUtil {
             return null;
         }
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         for (byte b : bytes) {
             result.append(Integer.toString((b & 0xF0) >> 4, 16));
             result.append(Integer.toString(b & 0x0F, 16));
@@ -43,7 +43,7 @@ public class ByteUtil {
      * @return
      * @throws NumberFormatException
      */
-    public static byte[] toBytes(String digits, int radix) throws IllegalArgumentException, NumberFormatException {
+    public static byte[] toBytes(String digits, int radix) throws IllegalArgumentException {
         if (digits == null) {
             return null;
         }
@@ -78,7 +78,7 @@ public class ByteUtil {
      * @return
      * @throws NumberFormatException
      */
-    public static byte[] toBytesFromHexString(String digits) throws IllegalArgumentException, NumberFormatException {
+    public static byte[] toBytesFromHexString(String digits) throws IllegalArgumentException {
         if (digits == null) {
             return null;
         }

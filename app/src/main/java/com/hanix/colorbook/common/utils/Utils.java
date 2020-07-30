@@ -56,16 +56,16 @@ public class Utils {
      * @param strArr
      * @return
      */
-    public static int[] getBubbleSort(String[] strArr) throws Exception {
+    public static int[] getBubbleSort(String[] strArr) {
 
-        int intArr[] = new int[strArr.length];
+        int[] intArr = new int[strArr.length];
 
         //str -> int
         for(int i=0; i<strArr.length; i++) {
             int naNum = 0;
             try {
                 naNum = Integer.parseInt( strArr[i].trim() );
-            } catch (Exception e) { }
+            } catch (Exception ignored) { }
             intArr[i] = naNum;
         }
 
@@ -148,7 +148,7 @@ public class Utils {
      * @throws Throwable
      */
     public static Bitmap retriveVideoFrameFromVideo(String videoPath) throws Throwable {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         MediaMetadataRetriever mediaMetadataRetriever = null;
         try {
             mediaMetadataRetriever = new MediaMetadataRetriever();
@@ -173,7 +173,6 @@ public class Utils {
      */
     public static Useage measureUnit(int size){
         String unit = "";
-        int k = size;
 
         double m = size/1024;
         double g = size/1048576;
@@ -183,9 +182,9 @@ public class Utils {
 
         DecimalFormat dec = new DecimalFormat("0.0");
 
-        if (k >= 0) {
+        if (size >= 0) {
             useage.unit = "KB";
-            useage.useage = dec.format(k);
+            useage.useage = dec.format(size);
         } if (m > 0) {
             useage.unit = "MB";
             useage.useage = dec.format(m);
@@ -215,6 +214,7 @@ public class Utils {
     }
 
     /** 화면 전체 스크린 사이즈 취득 */
+    @SuppressLint("ObsoleteSdkInt")
     public static Point getRealScreenSize(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
@@ -226,7 +226,7 @@ public class Utils {
             try {
                 size.x = (Integer) Display.class.getMethod("getRawWidth").invoke(display);
                 size.y = (Integer) Display.class.getMethod("getRawHeight").invoke(display);
-            } catch (IllegalAccessException e) {} catch (InvocationTargetException e) {} catch (NoSuchMethodException e) {}
+            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) {}
         }
 
         return size;
@@ -239,9 +239,8 @@ public class Utils {
         win.getDecorView().getWindowVisibleDisplayFrame(rect);
         int statusBarHeight = rect.top;
         int contentViewTop = win.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-        int titleBarHeight = contentViewTop - statusBarHeight;
 
-        return titleBarHeight;
+        return contentViewTop - statusBarHeight;
     }
 
 
@@ -268,7 +267,7 @@ public class Utils {
      */
     public static byte[] addPadding(byte[] source, int blockSize) {
         int paddingCnt = source.length % blockSize;
-        byte[] paddingResult = null;
+        byte[] paddingResult;
 
         if (paddingCnt != 0) {
             paddingResult = new byte[source.length + (blockSize - paddingCnt)];
@@ -291,9 +290,11 @@ public class Utils {
             int calcLen = orgStr.length() - len;
             if(calcLen < 0) {
                 calcLen = Math.abs(calcLen);
-                for(int i=0; i<calcLen; i++) {
-                    orgStr += " ";
+                StringBuilder orgStrBuilder = new StringBuilder(orgStr);
+                for(int i = 0; i<calcLen; i++) {
+                    orgStrBuilder.append(" ");
                 }
+                orgStr = orgStrBuilder.toString();
                 return  orgStr;
             } else {
                 return orgStr.substring(0, len);

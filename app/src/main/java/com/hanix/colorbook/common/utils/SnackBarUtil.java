@@ -32,20 +32,14 @@ public class SnackBarUtil {
    public static void showSnackbarClick (final View view, final String msg, final int length, String clickMsg, View.OnClickListener clickListener) {
         hideSnackbar();
 
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
+        new Handler(Looper.getMainLooper()).post(() ->{
                 hideSnackbar();
                 if(clickListener == null) {
-                    mSnackbar = Snackbar.make(view, msg, length).setAction(clickMsg, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) { mSnackbar.dismiss(); }
-                    });
+                    mSnackbar = Snackbar.make(view, msg, length).setAction(clickMsg, (v) -> mSnackbar.dismiss());
                 } else {
                     mSnackbar = Snackbar.make(view, msg, length).setAction(clickMsg, clickListener);
                 }
                 mSnackbar.show();
-            }
         });
    }
 

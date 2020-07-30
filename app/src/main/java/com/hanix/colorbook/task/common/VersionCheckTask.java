@@ -21,7 +21,7 @@ import com.hanix.colorbook.views.event.OnSingleClickListener;
 
 public class VersionCheckTask {
 
-    public static final int MY_REQUEST_CODE = 0111;
+    public static final int MY_REQUEST_CODE = 111;
     AppUpdateManager appUpdateManager;
     Task<AppUpdateInfo> appUpdateInfoTask;
 

@@ -31,7 +31,7 @@ public class ColorBookApplication extends MultiDexApplication {
         //앱 Crash 에러 로그가 저장된 경로(cache 디렉토리)
         logFilePathAppCrashError = new File(this.getCacheDir(), "crash_log.txt").getAbsolutePath();
         //GLog(전체로그) 로그가 저장되는 파일이름(cache 디렉토리)
-        logFileFileNameGLog = new File(this.getCacheDir(), "payme_GLog.txt").getAbsolutePath();
+        logFileFileNameGLog = new File(this.getCacheDir(), "payme_glog.txt").getAbsolutePath();
 
 
         logForPkgName = this.getPackageName();

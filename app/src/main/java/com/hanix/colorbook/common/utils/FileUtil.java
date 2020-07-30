@@ -52,9 +52,9 @@ public class FileUtil {
 
     public static boolean delFile(String fileFullPath) {
         try {
-            File existfile = new File(fileFullPath);
-            if(existfile.exists()) {
-                return existfile.delete();
+            File existFile = new File(fileFullPath);
+            if(existFile.exists()) {
+                return existFile.delete();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,15 +64,15 @@ public class FileUtil {
 
     public static boolean isCacheFileExist(Context context, String fileName) {
         try {
-            File existfile = new File(context.getCacheDir(), fileName);
-            return existfile.exists();
+            File existFile = new File(context.getCacheDir(), fileName);
+            return existFile.exists();
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    public static void delteCacheFile(Context context, String fileName) {
+    public static void deleteCacheFile(Context context, String fileName) {
         try {
             File file = File.createTempFile(fileName, null, context.getCacheDir());
             file.delete();
@@ -89,8 +89,9 @@ public class FileUtil {
     public static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
+            assert children != null;
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
                 if (!success) {
                     return false;
                 }

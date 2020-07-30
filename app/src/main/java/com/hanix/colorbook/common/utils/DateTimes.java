@@ -1,7 +1,7 @@
 package com.hanix.colorbook.common.utils;
 
+import android.annotation.SuppressLint;
 import android.text.TextUtils;
-
 
 import com.hanix.colorbook.common.app.GLog;
 
@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+@SuppressLint("SimpleDateFormat")
 public class DateTimes {
 
     public static final SimpleDateFormat DF_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd");
@@ -122,11 +123,11 @@ public class DateTimes {
         boolean rtnBool = false;
 
         if( TextUtils.isEmpty(fromDateStr) || TextUtils.isEmpty(toDateStr) ) {
-            return rtnBool;
+            return false;
         }
 
         try {
-            long diffMilli = -1;
+            long diffMilli;
             String todayStr = DF_YYYYMMDDHHMMSS.format(new Date());
             Date todayDt = DF_YYYYMMDDHHMMSS.parse(todayStr);
             Date fromDt = DF_YYYYMMDDHHMMSS.parse(fromDateStr);
@@ -167,9 +168,8 @@ public class DateTimes {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.DATE, offset);
-        String data = sdf.format(cal.getTime());
 
-        return data;
+        return sdf.format(cal.getTime());
     }
 
     /**
