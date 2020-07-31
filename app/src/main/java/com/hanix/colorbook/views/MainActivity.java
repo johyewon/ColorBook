@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hanix.colorbook.R;
-import com.hanix.colorbook.common.app.GLog;
 import com.hanix.colorbook.common.utils.PrefUtil;
 import com.hanix.colorbook.task.common.VersionCheckTask;
 import com.hanix.colorbook.views.adapter.PaletteAdapter;
@@ -87,10 +86,6 @@ public class MainActivity extends AppCompatActivity {
         versionCheckTask.updateResult(resultCode, requestCode);
     }
 
-    private void setPalette(int color) {
-        // TODO : color > Bitmap 변환 이후 palette 색상 가져오기
-    }
-
     private String colorHex(int color) {
         return String.format(Locale.getDefault(), "0x%02X%02X%02X%02X", Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color));
     }
@@ -131,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     private void showPopupMenu(View v) {
         PopupMenu popup = new PopupMenu(getApplicationContext(), v);
         getMenuInflater().inflate(R.menu.menu_choose, popup.getMenu());
+        popup.getMenu().findItem(R.id.main).setVisible(false);
         popup.setOnMenuItemClickListener(menuClick);
         popup.show();
     }
@@ -138,13 +134,17 @@ public class MainActivity extends AppCompatActivity {
     PopupMenu.OnMenuItemClickListener menuClick = (menuItem) -> {
         switch (menuItem.getItemId()) {
             case R.id.camera :
-                GLog.d("카메라 클릭");
+                goOtherPage(PickFromCameraActivity.class);
                 break;
 
             case R.id.gallery :
-                GLog.d("갤러리 클릭");
+                goOtherPage(PickFromGalleryActivity.class);
                 break;
         }
             return false;
     };
+
+    private void goOtherPage(Class<?> activityClass) {
+        startActivity(new Intent(MainActivity.this, activityClass));
+    }
 }
