@@ -37,4 +37,6 @@
 
     <string name="install">설치</string>
     <string name="install_eng">Install</string>
+    <string name="camera">카메라</string>
+    <string name="gallery">앨범</string>
 </resources>

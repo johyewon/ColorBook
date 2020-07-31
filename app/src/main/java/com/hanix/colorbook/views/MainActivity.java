@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hanix.colorbook.R;
+import com.hanix.colorbook.common.app.GLog;
 import com.hanix.colorbook.common.utils.PrefUtil;
 import com.hanix.colorbook.task.common.VersionCheckTask;
 import com.hanix.colorbook.views.adapter.PaletteAdapter;
@@ -32,10 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout mainLayout;
     ColorPickerView mainColorView;
-    LinearLayout mainLinearLayout, mainInLayout, mainInLayout2;
-    ImageView mainCamera, mainGallery;
-    TextView mainCameraText, mainGalleryText, mainCode;
+    TextView mainCode;
     Button mainSelect, mainReset;
+    ImageView mainPopup;
     RecyclerView mainPalette;
 
     VersionCheckTask versionCheckTask;
@@ -51,30 +51,18 @@ public class MainActivity extends AppCompatActivity {
 
         mainLayout = findViewById(R.id.mainLayout);
         mainColorView = findViewById(R.id.mainColorView);
-        mainLinearLayout = findViewById(R.id.mainLinearLayout);
-        mainInLayout = findViewById(R.id.mainInLayout);
-        mainInLayout2 = findViewById(R.id.mainInLayout2);
-        mainCamera = findViewById(R.id.mainCamera);
-        mainGallery = findViewById(R.id.mainGallery);
-        mainCameraText = findViewById(R.id.mainCameraText);
-        mainGalleryText = findViewById(R.id.mainGalleryText);
         mainPalette = findViewById(R.id.mainPalette);
         mainCode = findViewById(R.id.mainCode);
+        mainPopup = findViewById(R.id.mainPopup);
         mainSelect = findViewById(R.id.mainSelect);
         mainReset = findViewById(R.id.mainReset);
 
         mainLayout.setOnClickListener(mainClickListener);
         mainColorView.setOnClickListener(mainClickListener);
-        mainLinearLayout.setOnClickListener(mainClickListener);
-        mainInLayout.setOnClickListener(mainClickListener);
-        mainInLayout2.setOnClickListener(mainClickListener);
-        mainCamera.setOnClickListener(mainClickListener);
-        mainGallery.setOnClickListener(mainClickListener);
-        mainCameraText.setOnClickListener(mainClickListener);
-        mainGalleryText.setOnClickListener(mainClickListener);
         mainCode.setOnClickListener(mainClickListener);
         mainSelect.setOnClickListener(mainClickListener);
         mainReset.setOnClickListener(mainClickListener);
+        mainPopup.setOnClickListener(mainClickListener);
 
         List<String> items = PrefUtil.getColor(getApplicationContext());
         adapter = new PaletteAdapter(items, MainActivity.this);
@@ -82,8 +70,9 @@ public class MainActivity extends AppCompatActivity {
                 mainColorView.setInitialColor((int) Long.parseLong(String.valueOf(adapter.getItem(position)).replaceFirst("0x", ""), 16))
         );
         mainPalette.setAdapter(adapter);
-        mainPalette.setLayoutManager(new LinearLayoutManager(this));
+        mainPalette.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mainPalette.setItemAnimator(new DefaultItemAnimator());
+        mainColorView.setInitialColor(0xFF6C93FF);
 
         mainColorView.subscribe((color, fromUser, shouldPropagate) -> {
                 mainCode.setText(colorHex(color));
@@ -98,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
         versionCheckTask.updateResult(resultCode, requestCode);
     }
 
+    private void setPalette(int color) {
+        // TODO : color > Bitmap 변환 이후 palette 색상 가져오기
+    }
 
     private String colorHex(int color) {
         return String.format(Locale.getDefault(), "0x%02X%02X%02X%02X", Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color));
@@ -108,12 +100,8 @@ public class MainActivity extends AppCompatActivity {
         public void onSingleClick(View v) {
             switch (v.getId()) {
 
-                case R.id.mainCameraText:
-                case R.id.mainCamera:
-                    break;
-
-                case R.id.mainGalleryText:
-                case R.id.mainGallery:
+                case R.id.mainPopup:
+                    showPopupMenu(v);
                     break;
 
                 case R.id.mainSelect:
@@ -139,4 +127,24 @@ public class MainActivity extends AppCompatActivity {
         adapter.addItem(String.valueOf(mainCode.getText()));
         adapter.notifyDataSetChanged();
     }
+
+    private void showPopupMenu(View v) {
+        PopupMenu popup = new PopupMenu(getApplicationContext(), v);
+        getMenuInflater().inflate(R.menu.menu_choose, popup.getMenu());
+        popup.setOnMenuItemClickListener(menuClick);
+        popup.show();
+    }
+
+    PopupMenu.OnMenuItemClickListener menuClick = (menuItem) -> {
+        switch (menuItem.getItemId()) {
+            case R.id.camera :
+                GLog.d("카메라 클릭");
+                break;
+
+            case R.id.gallery :
+                GLog.d("갤러리 클릭");
+                break;
+        }
+            return false;
+    };
 }

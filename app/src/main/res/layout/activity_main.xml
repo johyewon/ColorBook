@@ -7,107 +7,50 @@
     android:layout_height="match_parent"
     tools:context=".views.MainActivity">
 
-    <top.defaults.colorpicker.ColorPickerView
-        android:id="@+id/mainColorView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:padding="20dp"
-        app:enableAlpha="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0">
 
-    <LinearLayout
-        android:id="@+id/mainLinearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mainColorView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9">
-
-        <LinearLayout
-            android:id="@+id/mainInLayout"
+        <top.defaults.colorpicker.ColorPickerView
+            android:id="@+id/mainColorView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp">
+            android:layout_height="match_parent"
 
-            <ImageView
-                android:id="@+id/mainCamera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/picture" />
-
-            <ImageView
-                android:id="@+id/mainGallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/slider" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/mainInLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp">
+            app:enableAlpha="true">
 
-            <TextView
-                android:id="@+id/mainCameraText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/nanumgothic"
-                android:gravity="center"
-                android:text="카메라에서 추출하기" />
+        </top.defaults.colorpicker.ColorPickerView>
 
-            <TextView
-                android:id="@+id/mainGalleryText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/nanumgothic"
-                android:gravity="center"
-                android:text="갤러리에서 불러오기" />
-        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mainPalette"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="clip_vertical|top"
+            android:layout_weight="3" />
 
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mainPalette"
-        android:layout_width="75dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/mainLinearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/mainPalette"
-        app:layout_constraintStart_toEndOf="@+id/mainColorView"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/mainSelect"
@@ -118,7 +61,8 @@
             android:background="@drawable/button_round"
             android:fontFamily="@font/nanumgothic"
             android:stateListAnimator="@null"
-            android:text="select" />
+            android:text="select"
+            android:textStyle="normal" />
 
         <Button
             android:id="@+id/mainReset"
@@ -129,19 +73,28 @@
             android:background="@drawable/button_round"
             android:fontFamily="@font/nanumgothic"
             android:stateListAnimator="@null"
-            android:text="reset" />
+            android:text="reset"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@+id/mainPopup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/more" />
+
     </LinearLayout>
 
     <TextView
         android:id="@+id/mainCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:fontFamily="@font/nanumgothic"
         android:text="0x0000FFFF"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/mainPalette"
-        app:layout_constraintStart_toEndOf="@+id/mainColorView"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

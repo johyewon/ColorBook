@@ -10,9 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hanix.colorbook.R;
-import com.hanix.colorbook.common.app.GLog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PaletteAdapter extends RecyclerView.Adapter<PaletteAdapter.Holder> {

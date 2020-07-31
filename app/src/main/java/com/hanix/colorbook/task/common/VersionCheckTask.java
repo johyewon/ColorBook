@@ -3,9 +3,8 @@ package com.hanix.colorbook.task.common;
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentSender;
-import android.view.View;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -17,7 +16,6 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 import com.hanix.colorbook.common.app.GLog;
-import com.hanix.colorbook.views.event.OnSingleClickListener;
 
 public class VersionCheckTask {
 
@@ -29,74 +27,64 @@ public class VersionCheckTask {
     Activity activity;
 
     public VersionCheckTask(Context context, Activity activity) {
-        this.context = context;
         this.activity = activity;
-        appUpdateManager = AppUpdateManagerFactory.create(this.context);
-        appUpdateManager.registerListener(installStateUpdatedListener);
+        this.context = context;
+
+        appUpdateManager = AppUpdateManagerFactory.create(context);
+        appUpdateManager.registerListener(installListener);
 
         appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
         appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
             if(appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                        && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
                 startUpdate(appUpdateInfo);
-            } else if(appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-                popupSnackBarForCompleteUpdate();
+            }else if(appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                showMessage();
             } else {
-                GLog.e("checkForAppUpdateAvailability : something else");
+                GLog.e("check For App Update Availability something else");
             }
         });
     }
 
-    InstallStateUpdatedListener installStateUpdatedListener = new InstallStateUpdatedListener() {
+    InstallStateUpdatedListener installListener = new InstallStateUpdatedListener() {
         @Override
         public void onStateUpdate(InstallState state) {
-            if(state.installStatus() == InstallStatus.DOWNLOADED) {
-                popupSnackBarForCompleteUpdate();
-            } else if(state.installStatus() == InstallStatus.INSTALLED) {
-                if(appUpdateManager != null)
-                    appUpdateManager.unregisterListener(installStateUpdatedListener);
+            if (state.installStatus() == InstallStatus.DOWNLOADED) {
+                showMessage();
+            } else if (state.installStatus() == InstallStatus.INSTALLED) {
+                if (appUpdateManager != null)
+                    appUpdateManager.unregisterListener(installListener);
             } else {
-                GLog.i("installStateUpdatedListener : state : " + state.installStatus());
+                GLog.i("install State Update Listener state : " + state.installStatus());
             }
         }
     };
+
+    private void showMessage() {
+        new MaterialAlertDialogBuilder(context)
+                .setTitle("새로운 업데이트가 기다리고 있습니다!")
+                .setMessage("업데이트 되는 동안은 앱이 종료되지 않습니다. 업데이트 하시겠습니까?")
+                .setNegativeButton("나중에 하기", (dialogInterface, i) -> dialogInterface.dismiss())
+                .setPositiveButton("업데이트", (dialogInterface, i) -> appUpdateManager.completeUpdate())
+                .show();
+    }
 
     private void startUpdate(AppUpdateInfo appUpdateInfo) {
         try {
             if(appUpdateManager != null && appUpdateInfoTask != null) {
                 appUpdateManager.startUpdateFlowForResult(
-                        appUpdateInfo,
-                        AppUpdateType.IMMEDIATE,
-                        activity,
-                        MY_REQUEST_CODE
+                        appUpdateInfo
+                        , AppUpdateType.FLEXIBLE
+                        , activity
+                        , MY_REQUEST_CODE
                 );
             }
-        } catch (IntentSender.SendIntentException e) {
-            GLog.e(e.getMessage());
-        }
-    }
-
-    private void popupSnackBarForCompleteUpdate() {
-
-        Snackbar snackbar = Snackbar.make(activity.getWindow().getDecorView().getRootView(),
-                "새로운 업데이트가 있습니다.", Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction("설치", new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View v) {
-                if(appUpdateManager != null)
-                    appUpdateManager.completeUpdate();
-            }
-        });
-
-        snackbar.show();
-
+        } catch (IntentSender.SendIntentException ignored){}
     }
 
     public void updateResult(int resultCode, int requestCode) {
-        if(requestCode == MY_REQUEST_CODE) {
-            if(resultCode == ActivityResult.RESULT_IN_APP_UPDATE_FAILED) {
-                GLog.e("RESULT_IN_APP_UPDATE_FAILED : " + resultCode);
-            }
-        }
+        if(requestCode == MY_REQUEST_CODE && resultCode != ActivityResult.RESULT_IN_APP_UPDATE_FAILED)
+            GLog.e("RESULT_IN_APP_UPDATE_FAILED : " + resultCode);
     }
+
 }
