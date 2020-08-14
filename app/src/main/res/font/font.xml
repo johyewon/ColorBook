@@ -4,4 +4,16 @@
         android:fontStyle="normal"
         android:font="@font/ridibatang"
         />
+    <font
+        android:fontStyle="normal"
+        android:font="@font/nanumgothic"
+        />
+    <font
+        android:fontStyle="normal"
+        android:font="@font/applesdgothicneom"
+        />
+    <font
+        android:fontStyle="normal"
+        android:font="@font/applesdgothicneob"
+        />
 </font-family>

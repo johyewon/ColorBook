@@ -22,7 +22,7 @@ import java.util.Locale;
 
 public class DeviceUtil {
 
-    public static enum DEVICE_MAKER {
+    public enum DEVICE_MAKER {
         SAMSUNG, LGE, ETC
     }
 
@@ -47,7 +47,7 @@ public class DeviceUtil {
     /**
      * 현재 기기의 Binary version 을 취득
      */
-    public static String getBinaryVersionName(Context context) {
+    public static String getBinaryVersionName() {
         String rdoVer = Build.getRadioVersion();
         if(!TextUtils.isEmpty(rdoVer) && rdoVer.length() > 32) {
             rdoVer = rdoVer.substring(0,32);
@@ -82,12 +82,12 @@ public class DeviceUtil {
         }
     }
 
-    /**
-     * 현재 네트워크망의 종류를 파악한다.
-     * To get device consuming netowkr type is 2g,3g,4g
-     *
-     * @return LTE 일때는 true, 나머지는 false
-     */
+//    /**
+//     * 현재 네트워크망의 종류를 파악한다.
+//     * To get device consuming network type is 2g,3g,4g
+//     *
+//     * @return LTE 일때는 true, 나머지는 false
+//     */
 //    public static boolean getNetworkTypeAvail(Context context) {
 //        TelephonyManager mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 //        int networkType = mTelephonyManager.getNetworkType();
@@ -233,13 +233,13 @@ public class DeviceUtil {
         int screenSizeType = context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
         if(screenSizeType == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-            GLog.d("SCREENLAYOUT_SIZE_NORMAL");
+            GLog.d("SCREEN_LAYOUT_SIZE_NORMAL");
         } else if(screenSizeType == Configuration.SCREENLAYOUT_SIZE_SMALL) {
-            GLog.d("SCREENLAYOUT_SIZE_SMALL");
+            GLog.d("SCREEN_LAYOUT_SIZE_SMALL");
         } else if(screenSizeType == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-            GLog.d("SCREENLAYOUT_SIZE_LARGE");
+            GLog.d("SCREEN_LAYOUT_SIZE_LARGE");
         } else if(screenSizeType == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
-            GLog.d("SCREENLAYOUT_SIZE_XLARGE");
+            GLog.d("SCREEN_LAYOUT_SIZE_XLARGE");
         }
 
         return screenSizeType== Configuration.SCREENLAYOUT_SIZE_NORMAL || screenSizeType== Configuration.SCREENLAYOUT_SIZE_SMALL;

@@ -31,9 +31,7 @@ public class FileUtil {
 
     public static StringBuffer loadTextFile(String fileFullPath) {
         StringBuffer sb = new StringBuffer();
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(fileFullPath));
+        try (BufferedReader br = new BufferedReader(new FileReader(fileFullPath))) {
             String line = br.readLine();
             while (line != null) {
                 sb.append(line);
@@ -42,10 +40,6 @@ public class FileUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if(br != null) {
-                try {br.close();}catch (Exception ee){}
-            }
         }
         return sb;
     }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- name 은 임시값 path 가 실제 값-->
+    <external-path name="color_book" path="/Pictures/colorbook" />
+</paths>

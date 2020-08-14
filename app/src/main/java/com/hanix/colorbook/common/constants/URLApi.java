@@ -1,6 +1,8 @@
 package com.hanix.colorbook.common.constants;
 
 
+import android.app.Activity;
+
 import com.hanix.colorbook.common.app.ColorBookApplication;
 
 public class URLApi {
@@ -14,6 +16,10 @@ public class URLApi {
             return URL_DEV_SERVER;
         }
         return URL_REAL_SERVER;
+    }
+
+    public static String getStoreUrl(Activity activity) {
+        return AppConstants.STORE_URL_GOOGLE+activity.getPackageName();
     }
 
 }

@@ -31,23 +31,20 @@ public class DlgUtil {
 
         mWaitingDlgIsShowing = true;
 
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    GLog.d("showWaitingDlg() ... ...");
+        new Handler(Looper.getMainLooper()).post(() -> {
+            try {
+                GLog.d("showWaitingDlg() ... ...");
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setView(R.layout.view_dlg_loading);
-                    mWaitingDialog = builder.create();
-                    mWaitingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    mWaitingDialog.setCancelable(false);
-                    Objects.requireNonNull(mWaitingDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setView(R.layout.view_dlg_loading);
+                mWaitingDialog = builder.create();
+                mWaitingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                mWaitingDialog.setCancelable(false);
+                Objects.requireNonNull(mWaitingDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                    mWaitingDialog.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                mWaitingDialog.show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
@@ -144,13 +141,16 @@ public class DlgUtil {
         mWaitingDlgIsShowing = false;
         if (mWaitingDialog != null) try {
             mWaitingDialog.dismiss();
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
         if (mMsgDialog != null) try {
             mMsgDialog.dismiss();
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
         if (mConfirmDialog != null) try {
             mConfirmDialog.dismiss();
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
     }
 
 }

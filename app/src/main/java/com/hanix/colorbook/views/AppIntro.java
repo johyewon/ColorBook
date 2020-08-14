@@ -37,7 +37,6 @@ public class AppIntro extends AppCompatActivity {
             super.handleMessage(msg);
 
             Intent intent;
-//            boolean isFirstRun = sf.getBoolean(AppConstants.isFirstRun, true);
             if (msg.what == STOP_SPLASH) {
                 intent = new Intent(AppIntro.this, MainActivity.class);
                 startActivity(intent);

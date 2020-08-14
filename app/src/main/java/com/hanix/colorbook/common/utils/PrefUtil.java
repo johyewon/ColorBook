@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

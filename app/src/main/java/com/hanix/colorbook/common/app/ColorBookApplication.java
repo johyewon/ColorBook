@@ -35,15 +35,5 @@ public class ColorBookApplication extends MultiDexApplication {
 
 
         logForPkgName = this.getPackageName();
-
-    }
-
-    public void finishApp(Activity activity) {
-        if(activity.isTaskRoot()) {
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
-        } else {
-            activity.finishAffinity();
-        }
     }
 }

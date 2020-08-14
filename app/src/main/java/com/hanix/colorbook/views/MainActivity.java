@@ -65,9 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> items = PrefUtil.getColor(getApplicationContext());
         adapter = new PaletteAdapter(items, MainActivity.this);
-        adapter.setItemClick((view, position) ->
-                mainColorView.setInitialColor((int) Long.parseLong(String.valueOf(adapter.getItem(position)).replaceFirst("0x", ""), 16))
-        );
+        adapter.setItemClick((view, position) -> mainColorView.setInitialColor((int) Long.parseLong(String.valueOf(adapter.getItem(position)).replaceFirst("0x", ""), 16)));
         mainPalette.setAdapter(adapter);
         mainPalette.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mainPalette.setItemAnimator(new DefaultItemAnimator());

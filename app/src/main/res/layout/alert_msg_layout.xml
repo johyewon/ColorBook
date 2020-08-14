@@ -7,7 +7,7 @@
     android:layout_marginLeft="10dp"
     android:layout_marginTop="5dp"
     android:layout_marginRight="10dp"
-    android:background="@drawable/button_round"
+    android:background="@drawable/button_round_main_color"
     android:orientation="horizontal"
     android:paddingLeft="30dp"
     android:paddingTop="20dp"
@@ -19,11 +19,11 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/ic_launcher_foreground" />
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/color_palette" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -32,6 +32,7 @@
             android:id="@+id/alertTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/applesdgothicneom"
             android:text="Title"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -40,7 +41,8 @@
             android:id="@+id/alertContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
+            android:fontFamily="@font/applesdgothicneom"
+            android:layout_marginStart="20dp"
             android:text="Content" />
     </LinearLayout>
 
@@ -49,7 +51,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
 </LinearLayout>

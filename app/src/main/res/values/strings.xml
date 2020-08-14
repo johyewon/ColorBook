@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ColorBook</string>
+    <string name="app_name">Color Book</string>
 
     <string name="default_notification_channel_id">ChannelID</string>
     <string name="default_notification_channel_name">BaseProject</string>
@@ -18,7 +18,7 @@
     <string name="txt_msg_you_must_update">최신 버전이 있습니다. 업데이트 후 사용 가능합니다.</string>
 
     <!-- 에러 메시지 정리 -->
-    <string name="err_msg_not_connect_inernet">네트워크 연결이 원활하지 않습니다.\n모바일 데이터 및 WIFI 연결상태를 확인해 주세요.</string>
+    <string name="err_msg_not_connect_internet">네트워크 연결이 원활하지 않습니다.\n모바일 데이터 및 WIFI 연결상태를 확인해 주세요.</string>
     <string name="err_msg_fail_to_use_service">서비스가 일시적으로 원활하지 않습니다. 잠시 후 다시 이용해 주세요.</string>
 
     <!-- common -->
