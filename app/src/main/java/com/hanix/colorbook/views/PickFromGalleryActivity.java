@@ -50,6 +50,23 @@ public class PickFromGalleryActivity extends AppCompatActivity {
         galleryMore.setOnClickListener(galleryClick);
         galleryPickPicture.setOnClickListener(galleryClick);
         isPictureOn = false;
+
+        galleryPicture.setOnTouchListener((view, motionEvent) -> {
+            if(isPictureOn) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_MOVE :
+                    case MotionEvent.ACTION_SCROLL:
+                        getColor((int)motionEvent.getX(), (int)motionEvent.getY());
+                        break;
+
+                    default:
+                        return false;
+                }
+            }
+            return false;
+        });
     }
 
     OnSingleClickListener galleryClick = new OnSingleClickListener() {
@@ -75,6 +92,7 @@ public class PickFromGalleryActivity extends AppCompatActivity {
         popupMenu.show();
 
     }
+
 
     PopupMenu.OnMenuItemClickListener menuClick = (menuItem) -> {
         switch (menuItem.getItemId()) {
@@ -132,7 +150,6 @@ public class PickFromGalleryActivity extends AppCompatActivity {
                 case MotionEvent.ACTION_DOWN:
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_MOVE :
-                    getColor((int)event.getX(), (int)event.getY());
                     break;
 
                 default:
@@ -145,7 +162,8 @@ public class PickFromGalleryActivity extends AppCompatActivity {
     private void getColor(int x, int y) {
         Drawable drawable = galleryPicture.getDrawable();
         Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
-        colorHex(bitmap.getPixel(x, y));
+        if(y < bitmap.getHeight() && x < bitmap.getWidth())
+            colorHex(bitmap.getPixel(x, y));
     }
     private void colorHex(int color) {
         String colorHex = String.format(Locale.getDefault(), "0x%02X%02X%02X%02X", Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color));

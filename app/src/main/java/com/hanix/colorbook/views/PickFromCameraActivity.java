@@ -2,10 +2,15 @@ package com.hanix.colorbook.views;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,8 +29,8 @@ import com.hanix.colorbook.common.utils.ToastUtil;
 import com.hanix.colorbook.views.event.OnSingleClickListener;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class PickFromCameraActivity extends AppCompatActivity {
 
@@ -36,6 +41,8 @@ public class PickFromCameraActivity extends AppCompatActivity {
     private Uri imgUri;
     private String mCurrentPhotoPath;
     private static final int FROM_CAMERA = 0;
+
+    private boolean isPictureOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +59,7 @@ public class PickFromCameraActivity extends AppCompatActivity {
 
         cameraMore.setOnClickListener(cameraClick);
         cameraPickPicture.setOnClickListener(cameraClick);
-
+        isPictureOn = false;
     }
 
     OnSingleClickListener cameraClick = new OnSingleClickListener() {
@@ -71,18 +78,44 @@ public class PickFromCameraActivity extends AppCompatActivity {
     };
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (isPictureOn) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_MOVE:
+                    getColor((int)event.getX(), (int)event.getY());
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == FROM_CAMERA && resultCode == RESULT_OK) {
+        if (requestCode == FROM_CAMERA && resultCode == RESULT_OK) {
             try {
                 galleryAddPic();
                 cameraPicture.setImageURI(imgUri);
+                isPictureOn = true;
             } catch (Exception e) {
                 GLog.e(e.getMessage(), e);
             }
         }
+    }
 
+    private void getColor(int x, int y) {
+        Drawable drawable = cameraPicture.getDrawable();
+        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+        if(y < bitmap.getHeight() && x < bitmap.getWidth())
+            colorHex(bitmap.getPixel(x, y));
+    }
+
+    private void colorHex(int color) {
+        String colorHex = String.format(Locale.getDefault(), "0x%02X%02X%02X%02X", Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color));
+        cameraCode.setText(colorHex);
+        cameraCode.setTextColor(color);
     }
 
     private void showPopupMenu(View v) {
@@ -132,7 +165,7 @@ public class PickFromCameraActivity extends AppCompatActivity {
     private File createImageFile() {
         String imgFileName = System.currentTimeMillis() + ".jpg";
         File imageFile;
-        File storageDir = new File(Environment.getExternalStorageDirectory()+"/Pictures", "colorbook");
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "colorbook");
 
         if (!storageDir.exists()) {
             storageDir.mkdirs();
@@ -169,7 +202,7 @@ public class PickFromCameraActivity extends AppCompatActivity {
         };
 
         TedPermission.with(PickFromCameraActivity.this)
-                .setPermissions(new String[] {
+                .setPermissions(new String[]{
                         Manifest.permission.CAMERA,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE

@@ -2,7 +2,11 @@
     <string name="app_name">Color Book</string>
 
     <string name="default_notification_channel_id">ChannelID</string>
-    <string name="default_notification_channel_name">BaseProject</string>
+    <string name="default_notification_channel_name">Color Book</string>
+
+    <string name="ads_id">ca-app-pub-6286281475941721~4173726374</string>
+    <string name="ads_under_ads_id">ca-app-pub-6286281475941721/2285929639</string>
+    <string name="ads_test_id">ca-app-pub-3940256099942544/6300978111</string>
 
     <string name="msg_info">안내</string>
     <string name="msg_desc">알림</string>

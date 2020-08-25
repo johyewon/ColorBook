@@ -16,6 +16,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.hanix.colorbook.R;
 import com.hanix.colorbook.common.utils.PrefUtil;
 import com.hanix.colorbook.task.common.VersionCheckTask;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     Button mainSelect, mainReset;
     ImageView mainPopup;
     RecyclerView mainPalette;
+    AdView adView;
 
     VersionCheckTask versionCheckTask;
 
@@ -48,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
         versionCheckTask = new VersionCheckTask(getApplicationContext(), MainActivity.this);
 
+        MobileAds.initialize(this, (initializationStatus) -> {
+        });
+
         mainLayout = findViewById(R.id.mainLayout);
         mainColorView = findViewById(R.id.mainColorView);
         mainPalette = findViewById(R.id.mainPalette);
@@ -55,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         mainPopup = findViewById(R.id.mainPopup);
         mainSelect = findViewById(R.id.mainSelect);
         mainReset = findViewById(R.id.mainReset);
+        adView = findViewById(R.id.adView);
 
         mainLayout.setOnClickListener(mainClickListener);
         mainColorView.setOnClickListener(mainClickListener);
@@ -62,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
         mainSelect.setOnClickListener(mainClickListener);
         mainReset.setOnClickListener(mainClickListener);
         mainPopup.setOnClickListener(mainClickListener);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         List<String> items = PrefUtil.getColor(getApplicationContext());
         adapter = new PaletteAdapter(items, MainActivity.this);
@@ -72,9 +83,10 @@ public class MainActivity extends AppCompatActivity {
         mainColorView.setInitialColor(0xFF6C93FF);
 
         mainColorView.subscribe((color, fromUser, shouldPropagate) -> {
-                mainCode.setText(colorHex(color));
-                mainCode.setTextColor(color);
+            mainCode.setText(colorHex(color));
+            mainCode.setTextColor(color);
         });
+
 
     }
 
@@ -131,15 +143,15 @@ public class MainActivity extends AppCompatActivity {
 
     PopupMenu.OnMenuItemClickListener menuClick = (menuItem) -> {
         switch (menuItem.getItemId()) {
-            case R.id.camera :
+            case R.id.camera:
                 goOtherPage(PickFromCameraActivity.class);
                 break;
 
-            case R.id.gallery :
+            case R.id.gallery:
                 goOtherPage(PickFromGalleryActivity.class);
                 break;
         }
-            return false;
+        return false;
     };
 
     private void goOtherPage(Class<?> activityClass) {

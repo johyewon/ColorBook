@@ -67,7 +67,13 @@
             android:resource="@color/mainColor" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" /> <!-- FCM Service -->
+            android:value="@string/default_notification_channel_id" />
+        <!-- FCM Service -->
+
+        <!-- Google adMob -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/ads_id"/>
 
         <provider
             android:authorities="com.hanix.colorbook"
