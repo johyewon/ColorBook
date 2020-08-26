@@ -31,7 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/background"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -39,6 +38,7 @@
             android:id="@+id/galleryPicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="centerInside"
             app:srcCompat="@drawable/broken_image" />
     </LinearLayout>
 
@@ -46,7 +46,6 @@
         android:id="@+id/galleryCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
         android:fontFamily="@font/applesdgothicneom"
         android:gravity="center"
         android:paddingTop="30dp"
@@ -70,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/button_round_normal"
+            android:background="@drawable/button_round_main_color"
             android:fontFamily="@font/applesdgothicneom"
             android:text="@string/pick_gallery"
             android:textStyle="normal" />

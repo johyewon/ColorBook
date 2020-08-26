@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hanix.colorbook.R;
 import com.hanix.colorbook.common.constants.AppConstants;
 
-
 public class AppIntro extends AppCompatActivity {
 
     SharedPreferences sf;

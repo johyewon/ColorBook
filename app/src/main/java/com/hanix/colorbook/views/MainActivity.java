@@ -86,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
             mainCode.setText(colorHex(color));
             mainCode.setTextColor(color);
         });
-
-
     }
 
     @Override

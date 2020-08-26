@@ -58,6 +58,7 @@ public class PickFromGalleryActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_MOVE :
                     case MotionEvent.ACTION_SCROLL:
+                        galleryPicture.onTouchEvent(motionEvent);
                         getColor((int)motionEvent.getX(), (int)motionEvent.getY());
                         break;
 
@@ -142,7 +143,6 @@ public class PickFromGalleryActivity extends AppCompatActivity {
     }
     // 갤러리 끝
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(isPictureOn) {
@@ -156,7 +156,7 @@ public class PickFromGalleryActivity extends AppCompatActivity {
                     return false;
             }
         }
-       return super.onTouchEvent(event);
+       return false;
     }
 
     private void getColor(int x, int y) {

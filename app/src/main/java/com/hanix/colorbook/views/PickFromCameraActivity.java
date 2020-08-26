@@ -84,7 +84,7 @@ public class PickFromCameraActivity extends AppCompatActivity {
                 case MotionEvent.ACTION_DOWN:
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_MOVE:
-                    getColor((int)event.getX(), (int)event.getY());
+                    getColor((int) event.getX(), (int) event.getY());
             }
         }
         return super.onTouchEvent(event);
@@ -107,8 +107,8 @@ public class PickFromCameraActivity extends AppCompatActivity {
 
     private void getColor(int x, int y) {
         Drawable drawable = cameraPicture.getDrawable();
-        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
-        if(y < bitmap.getHeight() && x < bitmap.getWidth())
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        if (y < bitmap.getHeight() && x < bitmap.getWidth())
             colorHex(bitmap.getPixel(x, y));
     }
 
